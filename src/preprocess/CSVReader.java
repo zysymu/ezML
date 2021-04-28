@@ -14,7 +14,7 @@ public class CSVReader {
     private ArrayList<String[]> contentStr;
     private double[][] data;
 
-    public void read (String file, String delimiter, boolean header) {
+    public void read(String file, String delimiter, boolean header) {
         this.header = header;
         contentStr = new ArrayList<>();
 
@@ -59,6 +59,7 @@ public class CSVReader {
 
                 for (int j=0; j<lineStr.length; j++) {
                     data[i][j] = Double.parseDouble(lineStr[j]);
+                    //System.out.println(Double.parseDouble(lineStr[j]));
                 }
             }
         } catch (NumberFormatException e) {
@@ -67,15 +68,15 @@ public class CSVReader {
         }
     }
 
-    public void read (String file, boolean header) {
+    public void read(String file, boolean header) {
         read(file, ",", header);
     }
 
-    public double[][] getData () {
+    public double[][] getData() {
         return data;
     }
 
-    public void printData (int n) {
+    public void printData(int n) {
         if (n >= contentStr.size())
             n = contentStr.size();
 
@@ -91,5 +92,6 @@ public class CSVReader {
             System.out.println(Arrays.toString(line));
 
         }
+        
     }
 }
