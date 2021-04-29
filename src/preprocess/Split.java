@@ -8,6 +8,10 @@ import java.util.Collections;
 public class Split {
     private double[][] trainData;
     private double[][] testData;
+    public double[][] trainFeatureData;
+    public double[][] testFeatureData;
+    public double[] trainLabelData;
+    public double[] testLabelData;
 
     public void trainTestSplit(double[][] data, double testSize, int randomState) {
         /*
@@ -42,11 +46,66 @@ public class Split {
         }
     }
 
-    public double[][] getTrainData () {
+    public double[][] getTrainData() {
         return trainData;
     }
 
-    public double[][] getTestData () {
+    public double[][] getTestData() {
         return testData;
     }
+
+    public void separateFeaturesLabels(int labelCol) {
+        // features of training and testing data
+        trainFeatureData = extractFeatures(trainData, labelCol);
+        testFeatureData = extractFeatures(testData, labelCol);
+
+        // labels of training and testing data
+        trainLabelData = extractLabel(trainData, labelCol); 
+        testLabelData =  extractLabel(trainData, labelCol);
+    }
+
+    public double[][] getTrainFeatureData() {
+        return trainFeatureData;
+    }
+
+    public double[][] getTestFeatureData() {
+        return testFeatureData;
+    }
+
+    public double[] getTrainLabelData() {
+        return trainLabelData;
+    }
+
+    public double[] getTestLabelData() {
+        return testLabelData;
+    }
+
+    private static double[][] extractFeatures(double[][] data, int colRemove) {
+        int row = data.length;
+        int col = data[0].length;
+
+        double[][] featureData = new double[row][col-1];
+
+        for (int i = 0; i < row; i++) {
+            for (int j = 0, currCol = 0; j < col; j++) {
+                if (j != colRemove)
+                    featureData[i][currCol++] = data[i][j];
+            }    
+        }
+
+        return featureData;
+    }
+
+    private static double[] extractLabel(double[][] data, int colKeep) {
+        int row = data.length;
+
+        double[] labelData = new double[row];
+
+        for (int i = 0; i < row; i++) {
+            labelData[i] = data[i][colKeep];
+            }
+
+        return labelData;
+    }
+    
 }
