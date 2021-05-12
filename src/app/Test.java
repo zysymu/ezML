@@ -1,10 +1,12 @@
-//package preprocess;
+package app;
+
+import preprocess.*;
 
 public class Test {
     public static void main(String args[]) {
         // load csv data into variable
         CSVReader reader = new CSVReader();
-        reader.read("src/preprocess/iris.data", true);
+        reader.read("src/app/iris.data", true);
         //reader.printData(24);
         
         double[][] data;
