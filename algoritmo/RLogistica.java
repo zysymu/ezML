@@ -2,21 +2,26 @@
 package algoritmo;
 
 import static java.lang.Math.exp;
+import static utils.MatrixOps.*;
 
-public class RLogistica {
+public class RLogistica extends Algoritmo{
     //Função cost usada é a 
     //Sigmoid(h) = 1 / (1 + exp(- theta_0 + theta_1*x_1 + theta_2*x_2 + ... )
-
+    
     private double[][] x;
     private double[][] theta;
     private double[] y;
-
+    private double treshold;
+    private int ID;
     public RLogistica(double [][] data) {
         this.setData(data);
+        this.treshold = 0.5;
+        this.ID = 2;
     } //só para poder criar RLogistica sem passar nada
-    public RLogistica(){};
-    
-    
+    public RLogistica(){ 
+        this.treshold = 0.5; 
+        this.ID = 2;
+    } 
     public void setData(double[][] data) {
         int numCol, numLin;
         numLin = data.length;       //M
@@ -115,6 +120,7 @@ public class RLogistica {
     }
 
     //função para treino de modelo
+    @Override
     public double[][] train(/*double[][] theta, double[][] x, double[] y*/) {
         double alpha = 0.005; //(LEARNING RATE) - posso add um optimização aqui
         for (int i = 0; i < 50000; i++) {
@@ -129,7 +135,8 @@ public class RLogistica {
         return theta;
     }
 
-    public double [] predict(double[][] theta, double[][] x /*,treshold */) {
+    @Override
+    public double [] predict(double[][] x) {
 
         double[][] X_bias = new double[x.length][x[0].length + 1];
         for (int i = 0; i < x.length; i++) { //Add coluna de 1 a esquerda de x formando X_bias
@@ -144,10 +151,10 @@ public class RLogistica {
         double[] res = new double[m.length];
         double[] probs = sigmoid(m);
         
-        double treshold = 0.5; //pode ser um parametro que o usario escolhe 
+        //pode ser um parametro que o usario escolhe 
         // geralmento o padrão é 0.5;
         for (int i = 0; i < probs.length; i++) {
-            if (probs[i] > treshold) {
+            if (probs[i] > this.treshold) {
                 res[i] = 1;
             } else {
                 res[i] = 0;
@@ -156,20 +163,21 @@ public class RLogistica {
 
         return res;
     }
-
-    public static double[][] matrizMulti(double[][] a, double[][] b) {
-        //Função de multiplicação de matrizes basica 
-        double[][] c = new double[a.length][b[0].length];
-
-        for (int i = 0; i < a.length; i++) {
-            for (int j = 0; j < b[0].length; j++) {
-                c[i][j] = 0;
-                for (int k = 0; k < b.length; k++) {
-                    c[i][j] += a[i][k] * b[k][j];
-                }
-            }
-        }
-        return c;
+    //Sigmoid(h) = 1 / (1 + exp(- theta_0 + theta_1*x_1 + theta_2*x_2 + ... )
+    @Override
+    public void printModel() {
+        System.out.println(" Sigmoid(h) = 1 / (1 + exp(- (theta_0 + theta_1*x_1 + theta_2*x_2 + ...) )");
     }
 
+    @Override
+    public int getID(){
+     return this.ID;
+    }
+
+    @Override
+    public void getDescription() {
+        System.out.println("DESCRIÇÃO DO MODELO");
+    }
+    
+    
 }

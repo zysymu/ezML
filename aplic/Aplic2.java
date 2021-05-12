@@ -1,8 +1,8 @@
-package aplic;
+/* package aplic;
 
 import algoritmo.RLogistica;
 import java.util.Arrays;
-import leitor.CSVReader;
+import preprocess.CSVReader;
 
 public class Aplic2 {
 
@@ -14,8 +14,8 @@ public class Aplic2 {
         RLogistica r = new RLogistica(a.getData());
         
         double[][] theta = r.train();
-        double[][] teste = {{100,5}}; //deve dar um rato obeso no exemplo
-        System.out.println(Arrays.toString(r.predict(theta, teste)));
+        double[][] teste = {{10,6}}; //deve dar um rato obeso no exemplo
+        System.out.println(Arrays.toString(r.predict(teste)));
         
     }
-}
+}*/
