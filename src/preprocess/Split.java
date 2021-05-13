@@ -54,7 +54,7 @@ public class Split {
         return testData;
     }
 
-    public void separateFeaturesLabels(int labelCol) {
+    public void separateFeaturesLabels(int labelCol, boolean normalize) {
         // features of training and testing data
         trainFeatureData = extractFeatures(trainData, labelCol);
         testFeatureData = extractFeatures(testData, labelCol);
@@ -62,6 +62,43 @@ public class Split {
         // labels of training and testing data
         trainLabelData = extractLabel(trainData, labelCol); 
         testLabelData =  extractLabel(trainData, labelCol);
+
+        if (normalize) {
+            trainFeatureData = normalize(trainFeatureData);
+            testFeatureData = normalize(testFeatureData);    
+        }
+    }
+
+    private static double[][] normalize(double[][] X) {
+        double[] mean = new double[X[0].length]; // columns
+        double[] std = new double[X[0].length]; // columns
+
+        for (int i = 0; i < X[0].length; i++) { // column
+            // mean
+            double meanCol = 0;
+
+            for (int m = 0; m < X.length; m++) {
+                meanCol += X[m][i];
+            }
+
+            mean[i] = meanCol/X.length;
+
+            // std
+            double stdCol = 0;
+
+            for (int m = 0; m < X.length; m++) {
+                stdCol += Math.pow(X[m][i] - mean[i], 2);
+            }
+
+            std[i] = stdCol;
+
+            // normalize the data
+            for (int m = 0; m < X.length; m++) {
+                X[m][i] = (X[m][i] - mean[i])/std[i];
+            }
+        }
+
+        return X;
     }
 
     public double[][] getTrainFeatureData() {
