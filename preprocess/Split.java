@@ -31,38 +31,42 @@ public class Split {
         int sep = (int) (dataShuffled.length * (1.- testSize)); // .length = number of rows / column train 
         int numCols = dataShuffled[0].length;
 
-        trainData = new double[sep][numCols];
+        this.trainData = new double[sep][numCols];
         for (int i=0; i<sep; i++) {
-            trainData[i] = dataShuffled[i];
+            this.trainData[i] = dataShuffled[i];
         }
 
-        testData = new double[dataShuffled.length - sep][numCols];
+        this.testData = new double[dataShuffled.length - sep][numCols];
         int iActual = 0;
         for (int i=sep; i<dataShuffled.length; i++) {
-            testData[iActual] = dataShuffled[i];
+            this.testData[iActual] = dataShuffled[i];
         }
+
     }
 
     public double[][] getTrainData() {
-        return trainData;
+        return this.trainData;
     }
 
     public double[][] getTestData() {
-        return testData;
+        return this.testData;
     }
 
     public void separateFeaturesLabels(int labelCol) {
+        
         // features of training and testing data
-        trainFeatureData = extractFeatures(trainData, labelCol);
-        testFeatureData = extractFeatures(testData, labelCol);
-
+        this.trainFeatureData = extractFeatures(this.trainData, labelCol);
+        this.testFeatureData = extractFeatures(this.testData, labelCol);
+        
         // labels of training and testing data
-        trainLabelData = extractLabel(trainData, labelCol); 
-        testLabelData =  extractLabel(trainData, labelCol);
+        
+        this.trainLabelData = extractLabel(this.trainData, labelCol); 
+        this.testLabelData =  extractLabel(this.testData, labelCol);
     }
 
     public double[][] getTrainFeatureData() {
-        return trainFeatureData;
+        return this.trainFeatureData;
+    
     }
 
     public double[][] getTestFeatureData() {
@@ -89,7 +93,6 @@ public class Split {
                     featureData[i][currCol++] = data[i][j];
             }    
         }
-
         return featureData;
     }
 

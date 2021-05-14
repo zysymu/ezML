@@ -1,9 +1,11 @@
 package guiPack;
 
 import java.io.File;
+import java.util.Arrays;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-
+import preprocess.*;
+import algoritmo.*;
 public class Jframe_Form extends javax.swing.JFrame {
 
     public Jframe_Form() {
@@ -25,15 +27,14 @@ public class Jframe_Form extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         seletorArq = new javax.swing.JButton();
         filePath = new javax.swing.JTextField();
-        rlLinear = new javax.swing.JRadioButton();
-        rLogistica = new javax.swing.JRadioButton();
-        arvoreDecisoes = new javax.swing.JRadioButton();
+        RLinear = new javax.swing.JRadioButton();
+        RLogistica = new javax.swing.JRadioButton();
+        arvoreD = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        soTeste = new java.awt.TextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,27 +55,32 @@ public class Jframe_Form extends javax.swing.JFrame {
             }
         });
 
-        buttonGroup1.add(rlLinear);
-        rlLinear.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
-        rlLinear.setText("Regressão linear");
-        rlLinear.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup1.add(RLinear);
+        RLinear.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        RLinear.setText("Regressão linear");
+        RLinear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rlLinearActionPerformed(evt);
+                RLinearActionPerformed(evt);
             }
         });
 
-        buttonGroup1.add(rLogistica);
-        rLogistica.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
-        rLogistica.setText("Regressão Logistica");
-        rLogistica.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup1.add(RLogistica);
+        RLogistica.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        RLogistica.setText("Regressão Logistica");
+        RLogistica.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rLogisticaActionPerformed(evt);
+                RLogisticaActionPerformed(evt);
             }
         });
 
-        buttonGroup1.add(arvoreDecisoes);
-        arvoreDecisoes.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
-        arvoreDecisoes.setText("Arvore de decisões");
+        buttonGroup1.add(arvoreD);
+        arvoreD.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        arvoreD.setText("Arvore de decisões");
+        arvoreD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                arvoreDActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
         jLabel1.setText("Selecione um algoritmo: ");
@@ -85,14 +91,11 @@ public class Jframe_Form extends javax.swing.JFrame {
 
         jLabel2.setText("Modelo da regressão: ");
 
-        jButton1.setText("Infos");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        soTeste.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                soTesteActionPerformed(evt);
             }
         });
-
-        jButton2.setText("Plot");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -107,27 +110,25 @@ public class Jframe_Form extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jLabel1)
-                        .addGap(26, 26, 26)
-                        .addComponent(rlLinear)
+                        .addContainerGap()
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(jLabel1)
+                                .addGap(26, 26, 26)
+                                .addComponent(RLinear))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(rLogistica)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(RLogistica, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(soTeste, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(arvoreDecisoes))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2)))
-                .addContainerGap(20, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
-                .addContainerGap())
+                        .addComponent(arvoreD)))
+                .addContainerGap(166, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,18 +139,19 @@ public class Jframe_Form extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(rlLinear)
-                    .addComponent(rLogistica)
-                    .addComponent(arvoreDecisoes))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
+                    .addComponent(RLinear)
+                    .addComponent(RLogistica)
+                    .addComponent(arvoreD))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(soTeste, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(72, 72, 72))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -167,15 +169,14 @@ public class Jframe_Form extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel1.getAccessibleContext().setAccessibleName("");
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     JFileChooser fileChooser;
     String filename;
     boolean arqOk;
-
+    
+    
     private void seletorArqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seletorArqActionPerformed
         //faz o botão abrir um FileChooser
         arqOk = false;
@@ -191,36 +192,86 @@ public class Jframe_Form extends javax.swing.JFrame {
                     if (filename.substring(i + 1).equals("csv")) { // se for do tipo csv
                         filePath.setText(fileChooser.getSelectedFile().getAbsolutePath());
                         arqOk = true;
-                    }
+                    }else
+                        showMessageDialog();
                 }
-                showMessageDialog();
             } else {
                 sair = true;
             }
         }
+        if(arqOk)
+            loadData();
     }//GEN-LAST:event_seletorArqActionPerformed
 
+    double [][] data;
+    boolean dataOk = false;
+    
+    private void loadData(){
+        CSVReader reader = new CSVReader();
+        reader.read(filename, true);
+        data = reader.getData();
+        dataOk = true;
+    }
+    
     private void showMessageDialog() {
         int ok = JOptionPane.showConfirmDialog(null, "Arquilo selecionado é invalido, selecione um arquivo .CSV", "Erro", JOptionPane.DEFAULT_OPTION);
     }
-
-
-    private void rlLinearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rlLinearActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rlLinearActionPerformed
+    
+    Algorithm alg;
+    int qualAlg;
+    
+    private void RLinearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RLinearActionPerformed
+            soTeste.setText("linear escolhida");
+            qualAlg = 0;
+            if(arqOk)
+                buildModel();
+    }//GEN-LAST:event_RLinearActionPerformed
 
     private void filePathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filePathActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_filePathActionPerformed
 
-    private void rLogisticaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rLogisticaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rLogisticaActionPerformed
+    private void RLogisticaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RLogisticaActionPerformed
+          soTeste.setText("lOGISTICA escolhida");
+          qualAlg = 1;
+          if(arqOk)
+            buildModel();
+    }//GEN-LAST:event_RLogisticaActionPerformed
+         
+    private void soTesteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_soTesteActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_soTesteActionPerformed
 
+    private void arvoreDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_arvoreDActionPerformed
+         soTeste.setText("arvore escolhida");
+         qualAlg = 2;
+         if(arqOk)
+            buildModel();
+    }//GEN-LAST:event_arvoreDActionPerformed
+
+
+    private void buildModel(){
+        /*
+        EM .trainTestSplit fazer o segundo termo ser escolhivel pelo usuario
+        */
+        Split spliter = new Split();
+                      //botar com os espaços la
+        spliter.trainTestSplit(data, 0.5, 6);
+        spliter.separateFeaturesLabels(data[0].length-1);
+        if(qualAlg == 0){
+            alg = new LinearRegression();
+            alg.setData(spliter.getTrainFeatureData(), spliter.getTrainLabelData());
+            System.out.println("DATA SETADA");
+        }else if(qualAlg == 1){
+            alg = new LogisticRegression();
+            alg.setData(spliter.getTrainFeatureData(), spliter.getTrainLabelData());
+            System.out.println("DATA SETADA");
+        }else{
+            System.out.println("Arvore ainda não implementada");
+        }
+    }
+    
+   
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -243,23 +294,44 @@ public class Jframe_Form extends javax.swing.JFrame {
                 new Jframe_Form().setVisible(true);
             }
         });
+       
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+ 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JRadioButton arvoreDecisoes;
+    private javax.swing.JRadioButton RLinear;
+    private javax.swing.JRadioButton RLogistica;
+    private javax.swing.JRadioButton arvoreD;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.JTextField filePath;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JRadioButton rLogistica;
-    private javax.swing.JRadioButton rlLinear;
     private javax.swing.JButton seletorArq;
+    private java.awt.TextField soTeste;
     // End of variables declaration//GEN-END:variables
 }
