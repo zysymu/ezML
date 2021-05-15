@@ -6,6 +6,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import preprocess.*;
 import algoritmo.*;
+import javax.swing.JTextField;
+
 public class Jframe_Form extends javax.swing.JFrame {
 
     public Jframe_Form() {
@@ -26,15 +28,24 @@ public class Jframe_Form extends javax.swing.JFrame {
         buttonGroup3 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         seletorArq = new javax.swing.JButton();
-        filePath = new javax.swing.JTextField();
+        filePathField = new javax.swing.JTextField();
         RLinear = new javax.swing.JRadioButton();
         RLogistica = new javax.swing.JRadioButton();
         arvoreD = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        talkerField = new java.awt.TextField();
+        jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        soTeste = new java.awt.TextField();
+        epochsField = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        LRfield = new javax.swing.JTextField();
+        stochasticOnOffButton = new javax.swing.JToggleButton();
+        jLabel4 = new javax.swing.JLabel();
+        tresholdField = new javax.swing.JTextField();
+        montarButton = new javax.swing.JButton();
+        percentage4train = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        trainButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -49,9 +60,9 @@ public class Jframe_Form extends javax.swing.JFrame {
             }
         });
 
-        filePath.addActionListener(new java.awt.event.ActionListener() {
+        filePathField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                filePathActionPerformed(evt);
+                filePathFieldActionPerformed(evt);
             }
         });
 
@@ -85,17 +96,137 @@ public class Jframe_Form extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
         jLabel1.setText("Selecione um algoritmo: ");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-
-        jLabel2.setText("Modelo da regressão: ");
-
-        soTeste.addActionListener(new java.awt.event.ActionListener() {
+        talkerField.setEditable(false);
+        talkerField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                soTesteActionPerformed(evt);
+                talkerFieldActionPerformed(evt);
             }
         });
+
+        jPanel2.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Configurações de Algoritmo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 14), new java.awt.Color(0, 0, 0))); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("Epochs:");
+
+        epochsField.setText("500");
+        epochsField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                epochsFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setText("Learning Rate:");
+
+        LRfield.setText("0.01");
+        LRfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LRfieldActionPerformed(evt);
+            }
+        });
+
+        stochasticOnOffButton.setText("Stochastic");
+        stochasticOnOffButton.setEnabled(false);
+        stochasticOnOffButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stochasticOnOffButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setText("Treshold:");
+
+        tresholdField.setText("0.5");
+        tresholdField.setEnabled(false);
+        tresholdField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tresholdFieldActionPerformed(evt);
+            }
+        });
+
+        montarButton.setText("Montar");
+        montarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                montarButtonActionPerformed(evt);
+            }
+        });
+
+        percentage4train.setText("0.6");
+        percentage4train.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                percentage4trainActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("% para treino:");
+
+        trainButton.setText("Treinar");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                        .addComponent(epochsField, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(percentage4train)
+                            .addComponent(LRfield, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(stochasticOnOffButton)
+                        .addGap(36, 36, 36)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tresholdField, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(277, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(montarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(trainButton, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(epochsField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(stochasticOnOffButton)
+                    .addComponent(jLabel4)
+                    .addComponent(tresholdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(LRfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(percentage4train, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addContainerGap(26, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(trainButton)
+                    .addComponent(montarButton)))
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -105,53 +236,41 @@ public class Jframe_Form extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addComponent(seletorArq)
                 .addGap(48, 48, 48)
-                .addComponent(filePath)
+                .addComponent(filePathField)
                 .addGap(54, 54, 54))
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(jLabel1)
-                                .addGap(26, 26, 26)
-                                .addComponent(RLinear))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel1)
+                        .addGap(26, 26, 26)
+                        .addComponent(RLinear)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(RLogistica, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(soTeste, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(RLogistica)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(arvoreD)))
-                .addContainerGap(166, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(talkerField, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(seletorArq)
-                    .addComponent(filePath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(filePathField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(RLinear)
                     .addComponent(RLogistica)
                     .addComponent(arvoreD))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(soTeste, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(72, 72, 72))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addComponent(talkerField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -172,11 +291,20 @@ public class Jframe_Form extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    JFileChooser fileChooser;
-    String filename;
-    boolean arqOk;
+    JFileChooser fileChooser; //janela de escolher arquivo
+    String filePath;    //caminho completo do arquivo
+    boolean arqOk;      // flag de arquivo valido
+    Algorithm alg;      // algoritmo 
+    int qualAlg;        // Só me sinaliza qual alg foi escolhido (mais facil q ficar verificando botão)
+    boolean modelOk = false;   //me diz se o modelo foi escolhido
+    double LRate;   // learning rate
+    int epochs;     
+    boolean paransOk  = false; //se epochs e LRate esta ok
+    boolean algOk = false;      // se o alg foi instanciado com sucesso
+    boolean montagemOk = false; // se data esta dentro de alg e esta tudo pronto para fit()
     
-    
+
+
     private void seletorArqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seletorArqActionPerformed
         //faz o botão abrir um FileChooser
         arqOk = false;
@@ -186,92 +314,160 @@ public class Jframe_Form extends javax.swing.JFrame {
         while (!arqOk && !sair) {
             resp = fileChooser.showOpenDialog(null); //seleciona file para abrir
             if (resp == JFileChooser.APPROVE_OPTION) { //se um arq foi escolhido
-                filename = fileChooser.getSelectedFile().getAbsolutePath();
-                int i = filename.lastIndexOf('.');
-                if (i > 0) { // se tiver um ponto ponto pelo menos
-                    if (filename.substring(i + 1).equals("csv")) { // se for do tipo csv
-                        filePath.setText(fileChooser.getSelectedFile().getAbsolutePath());
+                filePath = fileChooser.getSelectedFile().getAbsolutePath();
+                int i = filePath.lastIndexOf('.');
+                if (i > 0) { // se tiver um ponto pelo menos
+                    if (filePath.substring(i + 1).equals("csv")) { // se for do tipo csv
+                        filePathField.setText(fileChooser.getSelectedFile().getAbsolutePath());
                         arqOk = true;
-                    }else
+                    } else {
                         showMessageDialog();
+                    }
                 }
             } else {
                 sair = true;
             }
         }
-        if(arqOk)
+        if (arqOk)
             loadData();
     }//GEN-LAST:event_seletorArqActionPerformed
 
-    double [][] data;
+    double[][] data;
     boolean dataOk = false;
-    
-    private void loadData(){
+
+    private void loadData() {
         CSVReader reader = new CSVReader();
-        reader.read(filename, true);
+        reader.read(filePath, true);
         data = reader.getData();
         dataOk = true;
     }
-    
+
     private void showMessageDialog() {
         int ok = JOptionPane.showConfirmDialog(null, "Arquilo selecionado é invalido, selecione um arquivo .CSV", "Erro", JOptionPane.DEFAULT_OPTION);
     }
-    
-    Algorithm alg;
-    int qualAlg;
-    
+
+
     private void RLinearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RLinearActionPerformed
-            soTeste.setText("linear escolhida");
-            qualAlg = 0;
-            if(arqOk)
-                buildModel();
+        qualAlg = 0;
+        stochasticOnOffButton.setEnabled(true);
+        tresholdField.setEnabled(false);
+        modelOk = true;
+
     }//GEN-LAST:event_RLinearActionPerformed
 
-    private void filePathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filePathActionPerformed
+    private void filePathFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filePathFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_filePathActionPerformed
+    }//GEN-LAST:event_filePathFieldActionPerformed
 
     private void RLogisticaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RLogisticaActionPerformed
-          soTeste.setText("lOGISTICA escolhida");
-          qualAlg = 1;
-          if(arqOk)
-            buildModel();
-    }//GEN-LAST:event_RLogisticaActionPerformed
-         
-    private void soTesteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_soTesteActionPerformed
+        qualAlg = 1;
+        //criar uns umas coisas para setar mexer no alg
+        stochasticOnOffButton.setEnabled(false);
+        tresholdField.setEnabled(true);
+        modelOk = true;
 
-    }//GEN-LAST:event_soTesteActionPerformed
+    }//GEN-LAST:event_RLogisticaActionPerformed
+
+    private void talkerFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_talkerFieldActionPerformed
+
+    }//GEN-LAST:event_talkerFieldActionPerformed
 
     private void arvoreDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_arvoreDActionPerformed
-         soTeste.setText("arvore escolhida");
-         qualAlg = 2;
-         if(arqOk)
-            buildModel();
+        qualAlg = 2;
+
+        stochasticOnOffButton.setEnabled(false);
+        tresholdField.setEnabled(false);
+
+        modelOk = true;
     }//GEN-LAST:event_arvoreDActionPerformed
 
+    private void LRfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LRfieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LRfieldActionPerformed
 
-    private void buildModel(){
-        /*
-        EM .trainTestSplit fazer o segundo termo ser escolhivel pelo usuario
-        */
-        Split spliter = new Split();
-                      //botar com os espaços la
-        spliter.trainTestSplit(data, 0.5, 6);
-        spliter.separateFeaturesLabels(data[0].length-1);
-        if(qualAlg == 0){
-            alg = new LinearRegression();
-            alg.setData(spliter.getTrainFeatureData(), spliter.getTrainLabelData());
-            System.out.println("DATA SETADA");
-        }else if(qualAlg == 1){
-            alg = new LogisticRegression();
-            alg.setData(spliter.getTrainFeatureData(), spliter.getTrainLabelData());
-            System.out.println("DATA SETADA");
-        }else{
-            System.out.println("Arvore ainda não implementada");
+    private void stochasticOnOffButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stochasticOnOffButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_stochasticOnOffButtonActionPerformed
+
+    private void tresholdFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tresholdFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tresholdFieldActionPerformed
+
+    private void epochsFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_epochsFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_epochsFieldActionPerformed
+
+    private void montarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_montarButtonActionPerformed
+
+        try {
+            LRate = Double.parseDouble(LRfield.getText());
+            epochs = Integer.parseInt(epochsField.getText());
+            paransOk = true;
+        } catch (NumberFormatException e) {
+            paransOk = false;
+            talkerField.setText("Entrada de epochs ou learning rate invalida");
         }
+        if (arqOk && modelOk && paransOk) {
+            buildModel();
+        } else if (!arqOk)
+            talkerField.setText("Escolha um arquivo valido antes de montar");
+        else if(!modelOk)
+            talkerField.setText("Escolha um modelo antes de montar");
+    }//GEN-LAST:event_montarButtonActionPerformed
+
+    private void percentage4trainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_percentage4trainActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_percentage4trainActionPerformed
+
+    private void buildModel() {
+        montagemOk = false;
+        algOk = false;
+        //Ok agora com os dados que o usuario passou estão dentro do algoritmo
+        Split spliter = new Split();
+        switch (qualAlg) { //vejo qual vai ser o algoritmo e chamo o construtor independente dos dados dele
+            case 0:
+                alg = new LinearRegression(stochasticOnOffButton.isSelected());
+                algOk = true;
+                break;
+            case 1:
+                try {
+                double tr = Double.parseDouble(tresholdField.getText());
+                if (tr < 0 || tr > 1.0) {
+                    talkerField.setText("Treshold deve estar entra 0 e 1");
+                    System.out.println(tr);
+                } else {
+                    alg = new LogisticRegression(tr);
+                    algOk = true;
+                }
+            } catch (NumberFormatException e) {
+                talkerField.setText("Treshold deve ser um numero entre 0 e 1");
+            }
+            break;
+            default:
+                System.out.println("Arvore ainda não implementada");
+                break;
+        }
+        if (algOk) { //se esta tudo certo na instanciação
+            alg.setEpochs(epochs); 
+            alg.setLearingRate(LRate);
+            try { //passo a data de train para setData 
+                double testPer = 1.0 - Double.parseDouble(percentage4train.getText());
+                if (testPer > 0 && testPer < 1) {
+                    spliter.trainTestSplit(data, testPer, 6);
+                    spliter.separateFeaturesLabels(data[0].length - 1);
+                    alg.setData(spliter.getTrainFeatureData(), spliter.getTrainLabelData());
+                    montagemOk = true;
+                } else {
+                    talkerField.setText("A porcentagem para treino deve ser  0 e 1");
+                }
+            } catch (NumberFormatException e) {
+                talkerField.setText("A porcentagem para treino deve ser um numero entre 0 e 1");
+            }
+        }
+        if(montagemOk)
+            talkerField.setText("Modelo montado com sucesso!");
     }
-    
-   
+
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -294,44 +490,32 @@ public class Jframe_Form extends javax.swing.JFrame {
                 new Jframe_Form().setVisible(true);
             }
         });
-       
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
- 
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField LRfield;
     private javax.swing.JRadioButton RLinear;
     private javax.swing.JRadioButton RLogistica;
     private javax.swing.JRadioButton arvoreD;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
-    private javax.swing.JTextField filePath;
+    private javax.swing.JTextField epochsField;
+    private javax.swing.JTextField filePathField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton montarButton;
+    private javax.swing.JTextField percentage4train;
     private javax.swing.JButton seletorArq;
-    private java.awt.TextField soTeste;
+    private javax.swing.JToggleButton stochasticOnOffButton;
+    private java.awt.TextField talkerField;
+    private javax.swing.JButton trainButton;
+    private javax.swing.JTextField tresholdField;
     // End of variables declaration//GEN-END:variables
 }

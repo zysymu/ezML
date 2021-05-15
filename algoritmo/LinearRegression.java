@@ -16,10 +16,8 @@ public class LinearRegression extends Algorithm{
         this.epochs = epochs;
         this.stochastic = stochastic;
     }
-    public LinearRegression(){
-        learningRate = 0.01;
-        epochs = 500;
-        stochastic = false;
+    public LinearRegression(boolean sto){
+        this.stochastic = sto;
     }
 
     @Override
@@ -126,6 +124,17 @@ public class LinearRegression extends Algorithm{
 
         return sum/m;
     }
+    public void setEpochs(int epochs){
+        this.epochs = epochs;
+    }
+    
+    public void setLearingRate(double lr){
+        this.learningRate = lr;
+    }
+    
+    public void setStochstic(boolean stochstic){
+        this.stochastic = stochstic;
+    }
     
     /*public double[][] fit() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -148,6 +157,11 @@ public class LinearRegression extends Algorithm{
 
     @Override
     public int getID() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setData(double[][] data) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

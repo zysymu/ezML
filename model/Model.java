@@ -1,8 +1,11 @@
-package model;
 
+//package model;
+
+/*
 /*
 O modelo recebe um Algortimo(A) e os dados;.
  */
+/*
 import algoritmo.*;
 import preprocess.CSVReader;
 
@@ -47,3 +50,4 @@ public class Model {
 
     
 }
+*/

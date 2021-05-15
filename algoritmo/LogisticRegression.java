@@ -1,4 +1,3 @@
-/* */
 package algoritmo;
 
 import static java.lang.Math.exp;
@@ -13,7 +12,8 @@ public class LogisticRegression extends Algorithm{
     private double[] y;
     private double treshold;
     private final int ID = 2;
-    
+    private int epochs;
+    private double learningRate;
     
     
     public LogisticRegression(double [][] data) {
@@ -21,8 +21,8 @@ public class LogisticRegression extends Algorithm{
         this.treshold = 0.5;
     } //só para poder criar RLogistica sem passar nada
     
-    public LogisticRegression(){ 
-        this.treshold = 0.5; 
+    public LogisticRegression(double tr){ 
+        this.treshold = tr; 
     }
     
     public LogisticRegression(double [][] x, double [] y){ //caso passe x e y prontos
@@ -150,7 +150,7 @@ public class LogisticRegression extends Algorithm{
     @Override
     public double[][] fit(/*double[][] theta, double[][] x, double[] y*/) {
         double alpha = 0.01; //(LEARNING RATE) - posso add um optimização aqui
-        for (int i = 0; i < 2000; i++) {
+        for (int i = 0; i < epochs; i++) {
 
             //double[] grad = cost(theta, x, y);
             double[] grad = cost();
@@ -190,7 +190,24 @@ public class LogisticRegression extends Algorithm{
 
         return res;
     }
-    //Sigmoid(h) = 1 / (1 + exp(- theta_0 + theta_1*x_1 + theta_2*x_2 + ... )
+    
+    public void setEpochs(int epochs){
+        this.epochs = epochs;
+    }
+
+    public void setLearingRate(double lr){
+        this.learningRate = lr;
+    }
+    
+    public void setTreshold(double th){
+        if(th>1 || th<0)
+            th = 0.5;
+        this.treshold = th;
+    }
+
+
+
+//Sigmoid(h) = 1 / (1 + exp(- theta_0 + theta_1*x_1 + theta_2*x_2 + ... )
     @Override
     public void printModel() { //TODO
         System.out.println(" Sigmoid(h) = 1 / (1 + exp(- (theta_0 + theta_1*x_1 + theta_2*x_2 + ...) )");
@@ -205,6 +222,7 @@ public class LogisticRegression extends Algorithm{
     public void getDescription() {
         System.out.println("DESCRIÇÃO DO MODELO");
     } //TODO
+    
     
     
 }
