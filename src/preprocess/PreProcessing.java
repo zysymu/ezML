@@ -5,17 +5,21 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Collections;
 
-public class Split {
+public class PreProcessing {
     private double[][] trainData;
     private double[][] testData;
-    public double[][] trainFeatureData;
-    public double[][] testFeatureData;
-    public double[] trainLabelData;
-    public double[] testLabelData;
+    private double[][] trainFeatureData;
+    private double[][] testFeatureData;
+    private double[] trainLabelData;
+    private double[] testLabelData;
+    private double[] mean;
+    private double[] std;
 
     public void trainTestSplit(double[][] data, double testSize, int randomState) {
         /*
-        Input:
+        Splits the data into a training set and a testing set.
+
+        Inputs:
             data (double[][]): 2d array cotaining the data points.
 
             testSize (double): value between 0. and 1. that represents the proportion of the dataset to include in the test split.
@@ -46,15 +50,14 @@ public class Split {
         }
     }
 
-    public double[][] getTrainData() {
-        return trainData;
-    }
+    public void featuresLabelsSplit(int labelCol) {
+        /*
+        Splits the training set and the testing set into an array of features (2d) and an array of labels (1d).
 
-    public double[][] getTestData() {
-        return testData;
-    }
+        Inputs:
+            labelCol (int): the position of the column that contains the labels, starts at 0 (default = rightmost column).
+        */
 
-    public void separateFeaturesLabels(int labelCol, boolean normalize) {
         // features of training and testing data
         trainFeatureData = extractFeatures(trainData, labelCol);
         testFeatureData = extractFeatures(testData, labelCol);
@@ -62,44 +65,71 @@ public class Split {
         // labels of training and testing data
         trainLabelData = extractLabel(trainData, labelCol); 
         testLabelData =  extractLabel(trainData, labelCol);
-
-        if (normalize) {
-            trainFeatureData = normalize(trainFeatureData);
-            testFeatureData = normalize(testFeatureData);    
-        }
     }
 
-    private static double[][] normalize(double[][] X) {
-        double[] mean = new double[X[0].length]; // columns
-        double[] std = new double[X[0].length]; // columns
+    public void featuresLabelsSplit() {
+        featuresLabelsSplit(trainData[0].length-1);
+    }
 
-        for (int i = 0; i < X[0].length; i++) { // column
+    public void normalize() {
+        /*
+        Normalizes feature data for each colun of the training and testing set according to newX = (X - meanColumn) / stdColumn
+        */
+
+        mean = new double[trainFeatureData[0].length]; // columns
+        std = new double[trainFeatureData[0].length]; // columns
+
+        for (int i = 0; i < trainFeatureData[0].length; i++) { // column
             // mean
             double meanCol = 0;
 
-            for (int m = 0; m < X.length; m++) {
-                meanCol += X[m][i];
+            for (int m = 0; m < trainFeatureData.length; m++) {
+                meanCol += trainFeatureData[m][i];
             }
 
-            mean[i] = meanCol/X.length;
+            mean[i] = meanCol/trainFeatureData.length;
 
             // std
             double stdCol = 0;
 
-            for (int m = 0; m < X.length; m++) {
-                stdCol += Math.pow(X[m][i] - mean[i], 2);
+            for (int m = 0; m < trainFeatureData.length; m++) {
+                stdCol += Math.pow(trainFeatureData[m][i] - mean[i], 2);
             }
 
             std[i] = stdCol;
 
-            // normalize the data
-            for (int m = 0; m < X.length; m++) {
-                X[m][i] = (X[m][i] - mean[i])/std[i];
+            // normalize the training data
+            for (int m = 0; m < trainFeatureData.length; m++) {
+                trainFeatureData[m][i] = (trainFeatureData[m][i] - mean[i])/std[i];
             }
+
+            // normalize the testing data (using training's mean and std to avoid leakage)
+            for (int m = 0; m < testFeatureData.length; m++) {
+                testFeatureData[m][i] = (testFeatureData[m][i] - mean[i])/std[i];
+            }
+        }
+    }
+
+    public double[] normalize (double[] X) {
+        /*
+        Normalizes an input vector X according to the dataset's normalization.
+        To be used when predicting input X on a classifier that was trained on normalized data.
+
+        Inputs:
+            X (double[]): array of the features to be normalized (and then used with the classifiers '.predict' method).
+        */
+
+        assert(X.length == trainFeatureData[0].length):
+        "X de entrada deve ter o mesmo numero de features (colunas) que os dados de treino";
+
+        for (int i = 0; i < X.length; i++) {
+            X[i] = (X[i] - mean[i]) / std[i];
         }
 
         return X;
     }
+
+    // ONE HOT ENCODER FOR LABELS IN CLASSIFICATION PROBLEMS
 
     public double[][] getTrainFeatureData() {
         return trainFeatureData;

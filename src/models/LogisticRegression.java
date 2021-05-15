@@ -3,21 +3,19 @@ package models;
 import java.util.Random;
 import java.lang.Math;
 
-public class LinearRegression extends Algorithm {
-    double learningRate;
-    double epochs;
-    boolean stochastic;
-    boolean trackError;
-    double[] parameters; // theta
+public class LogisticRegression extends Algorithm {
+    private double learningRate;
+    private double epochs;
+    private double threshold;
+    private boolean trackError;
+    private double[] parameters; // theta
 
-    public LinearRegression(double learningRate, int epochs, boolean stochastic, boolean trackError) {
+    public LogisticRegression(double learningRate, int epochs, double threshold, boolean trackError) {
         this.learningRate = learningRate;
         this.epochs = epochs;
-        this.stochastic = stochastic;
-        this.trackError = trackError; // tracks error on training set
+        this.threshold = threshold;
+        this.trackError = trackError;
     }
-
-    // setData(X, y)
     
     public void fit(double[][] X, double[] y) {
         // get dimensions
@@ -32,30 +30,7 @@ public class LinearRegression extends Algorithm {
             parameters[i] = random.nextDouble();
         }
 
-        // train the model
-        if (stochastic = true)
-            stochasticGradientDescent(X, y);
-
         batchGradientDescent(X,y);
-    }
-
-    private void stochasticGradientDescent(double[][] X, double[] y) {
-        // get dimensions
-        int nSamples = X.length;
-
-        // perform update
-        for (int e = 0; e < epochs; e++) {
-            for (int m = 0; m < nSamples; m++) {
-                parameters[0] -= learningRate * (predict(X[m]) - y[m]); // * x_j^m = 1
-
-                for (int j = 1; j < parameters.length; j++) {
-                    parameters[j] -= learningRate * (predict(X[m]) - y[m]) * X[m][j-1];
-                }
-            }
-
-            if (trackError)
-                System.out.printf("%f,", error(X, y));
-        }
     }
 
     private void batchGradientDescent(double[][] X, double[] y) {
@@ -80,11 +55,11 @@ public class LinearRegression extends Algorithm {
                     }
                 }
 
-                parameters[j] -= learningRate * sum;
+                parameters[j] += learningRate * sum;
             }
 
             if (trackError)
-                System.out.printf("%f,", error(X, y));
+                System.out.printf("%f,", accuracy(X, y));
         }
     }
 
@@ -94,21 +69,28 @@ public class LinearRegression extends Algorithm {
         for (int i = 1; i < X.length; i++) {
             d += X[i-1] * parameters[i];
         }
-        return d + parameters[0];
+
+        double linearModel = d + parameters[0];
+        double prob = sigmoid(linearModel);
+
+        return prob > threshold ? 1. : 0.;
     }
 
     public double[] getParameters() {
-        return parameters; // theta_0 + theta_1 x_1 + theta_2 + x_2 + ...
+        return parameters;
     }
 
-    public double error(double[][] X, double[] y) { // mean absolute error
+    public double accuracy(double[][] X, double[] y) {
         double sum = 0;
 
         for (int i = 0; i < X.length; i++) {
-                //sum += Math.pow(predict(X[i]) - y[i], 2);
-                sum += Math.abs(predict(X[i]) - y[i]);
+            sum += predict(X[i]) == y[i] ? 1. : 0.;
         }
 
         return sum/X.length;
+    }
+
+    private static double sigmoid(double z) {
+        return 1 / (1 + Math.exp(-z));
     }
 }
