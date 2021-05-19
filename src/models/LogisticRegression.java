@@ -7,17 +7,37 @@ public class LogisticRegression extends Algorithm {
     private double learningRate;
     private double epochs;
     private double threshold;
-    private boolean trackError;
+    private boolean trackError = false;
     private double[] parameters; // theta
+    private double[][] X;
+    private double[] y;
 
-    public LogisticRegression(double learningRate, int epochs, double threshold, boolean trackError) {
+    public LogisticRegression() {
+    }
+
+    // "constructors"
+    public void setLearningRate(double learningRate) {
         this.learningRate = learningRate;
+    }
+
+    public void setEpochs(int epochs) {
         this.epochs = epochs;
+    }
+
+    public void setThreshold(double threshold) {
         this.threshold = threshold;
-        this.trackError = trackError;
+    }
+
+    public void TrackError() {
+        this.trackError = true;// tracks error on training set
+    }
+
+    public void setData(double[][] X, double[] y) {
+        this.X = X;
+        this.y = y;
     }
     
-    public void fit(double[][] X, double[] y) {
+    public void fit() {
         // get dimensions
         int nFeatures = X[0].length;
         

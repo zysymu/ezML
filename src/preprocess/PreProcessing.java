@@ -76,30 +76,33 @@ public class PreProcessing {
         Normalizes feature data for each colun of the training and testing set according to newX = (X - meanColumn) / stdColumn
         */
 
-        mean = new double[trainFeatureData[0].length]; // columns
-        std = new double[trainFeatureData[0].length]; // columns
+        int numCols = trainFeatureData[0].length;
+        int numSamples = trainFeatureData.length;
 
-        for (int i = 0; i < trainFeatureData[0].length; i++) { // column
+        mean = new double[numCols]; // columns
+        std = new double[numCols]; // columns
+
+        for (int i = 0; i < numCols; i++) { // column
             // mean
             double meanCol = 0;
 
-            for (int m = 0; m < trainFeatureData.length; m++) {
+            for (int m = 0; m < numSamples; m++) {
                 meanCol += trainFeatureData[m][i];
             }
 
-            mean[i] = meanCol/trainFeatureData.length;
+            mean[i] = meanCol/numSamples;
 
             // std
             double stdCol = 0;
 
-            for (int m = 0; m < trainFeatureData.length; m++) {
+            for (int m = 0; m < numSamples; m++) {
                 stdCol += Math.pow(trainFeatureData[m][i] - mean[i], 2);
             }
 
-            std[i] = stdCol;
+            std[i] = Math.sqrt(stdCol/(numSamples-1));
 
             // normalize the training data
-            for (int m = 0; m < trainFeatureData.length; m++) {
+            for (int m = 0; m < numSamples; m++) {
                 trainFeatureData[m][i] = (trainFeatureData[m][i] - mean[i])/std[i];
             }
 
@@ -130,6 +133,14 @@ public class PreProcessing {
     }
 
     // ONE HOT ENCODER FOR LABELS IN CLASSIFICATION PROBLEMS
+
+    public double[] getMean() {
+        return mean;
+    }
+
+    public double[] getStd() {
+        return std;
+    }
 
     public double[][] getTrainFeatureData() {
         return trainFeatureData;

@@ -4,22 +4,40 @@ import java.util.Random;
 import java.lang.Math;
 
 public class LinearRegression extends Algorithm {
-    double learningRate;
-    double epochs;
-    boolean stochastic;
-    boolean trackError;
-    double[] parameters; // theta
+    private double learningRate;
+    private double epochs;
+    private boolean stochastic = false;
+    private boolean trackError = false;
+    private double[] parameters; // theta
+    private double[][] X;
+    private double[] y;
 
-    public LinearRegression(double learningRate, int epochs, boolean stochastic, boolean trackError) {
-        this.learningRate = learningRate;
-        this.epochs = epochs;
-        this.stochastic = stochastic;
-        this.trackError = trackError; // tracks error on training set
+    public LinearRegression() {
     }
 
-    // setData(X, y)
+    // "constructors"
+    public void setLearningRate(double learningRate) {
+        this.learningRate = learningRate;
+    }
+
+    public void setEpochs(int epochs) {
+        this.epochs = epochs;
+    }
+
+    public void setStochastic() {
+        this.stochastic = true;
+    }
+
+    public void TrackError() {
+        this.trackError = true;// tracks error on training set
+    }
+
+    public void setData(double[][] X, double[] y) {
+        this.X = X;
+        this.y = y;
+    }
     
-    public void fit(double[][] X, double[] y) {
+    public void fit() {
         // get dimensions
         int nFeatures = X[0].length;
         
@@ -33,10 +51,13 @@ public class LinearRegression extends Algorithm {
         }
 
         // train the model
-        if (stochastic = true)
+        if (stochastic == true) {
             stochasticGradientDescent(X, y);
-
-        batchGradientDescent(X,y);
+        }
+        
+        else {
+            batchGradientDescent(X,y);
+        }
     }
 
     private void stochasticGradientDescent(double[][] X, double[] y) {
@@ -64,7 +85,6 @@ public class LinearRegression extends Algorithm {
 
         // perform update
         for (int e = 0; e < epochs; e++) {
-
             for (int j = 1; j < parameters.length; j++) {
                 double sum = 0;
 

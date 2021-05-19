@@ -2,15 +2,15 @@ package app;
 
 import preprocess.*;
 import models.*;
-
+    
 public class Test {
     public static void main(String args[]) {
         // LOAD CSV DATA
         CSVReader reader = new CSVReader();
 
         //reader.read("src/app/iris.data", true); // classification 
-        //reader.read("src/app/ratos.csv", false); // classification
-        reader.read("src/app/housing.csv", false); // regression
+        reader.read("src/app/ratos.csv", false); // classification
+        //reader.read("src/app/housing.csv", false); // regression
         
         double[][] data;
         data = reader.getData();
@@ -46,28 +46,56 @@ public class Test {
         */
 
         // CHOOSE CLASSIFIER AND TRAIN IT
-        LinearRegression clf = new LinearRegression(0.01, 5000, true, true);
-        //LogisticRegression clf = new LogisticRegression(0.001, 5000, 0.5, true);
+        //LinearRegression clf = new LinearRegression();
+        //clf.setLearningRate(0.0001);
+        //clf.setEpochs(1000);
+        //clf.setStochastic();
+        //clf.TrackError();
+        
+        LogisticRegression clf = new LogisticRegression();
+        clf.setLearningRate(0.001);
+        clf.setEpochs(5000);
+        clf.setThreshold(0.5);
+        clf.TrackError();
 
-        clf.fit(trainFeatureData, trainLabelData);
-        double[] p = clf.getParameters(); // these can be used to make plots
-
-        //for (int i = 0; i < p.length; i++) {
-        //    System.out.println(p[i]);
-        //}
-
+        clf.setData(trainFeatureData, trainLabelData);
+        clf.fit();
         System.out.println("=========================");
 
-        System.out.println(clf.error(testFeatureData, testLabelData));
+        double[] p = clf.getParameters(); // these can be used to make plots
 
-        // regression test. target = 15.20
-        double[] aa = {1.23247,0.00,8.140,0.5380,6.1420,91.70,3.9769,307.0,21.00,396.90,18.72};
-        double[] aaNormalized = process.normalize(aa);
+        System.out.println("parameters: theta_0 (bias), theta_1, theta_2, ...");
+        for (int i = 0; i < p.length; i++) {
+            System.out.println(p[i]);
+        }
+        System.out.println("=========================");
 
-        // classification test. target = 1
-        //double[] aa = {320,18};
+        System.out.println("mean");
+        p = process.getMean();
+        for (int i = 0; i < p.length; i++) {
+            System.out.println(p[i]);
+        }
+        System.out.println("=========================");
+
+        System.out.println("std");
+        p = process.getStd();
+        for (int i = 0; i < p.length; i++) {
+            System.out.println(p[i]);
+        }
+        System.out.println("=========================");
+
+        System.out.println("accuracy");
+        System.out.println(clf.accuracy(testFeatureData, testLabelData));
+
+        // regression test. target = 34.90
+        //double[] aa = {0.03359,75.00,2.950,0.4280,7.0240,15.80,5.4011,252.0,18.30,395.62,1.98};
         //double[] aaNormalized = process.normalize(aa);
 
+        // classification test. target = 1
+        double[] aa = {320,18};
+        double[] aaNormalized = process.normalize(aa);
+
+        System.out.println("prediction");
         System.out.println(clf.predict(aaNormalized));
     }
 }
