@@ -1,0 +1,8 @@
+epochs : a quantidade de vezes que o alg vai treinar sob os dados de treino
+learning rate: quanto ele aprende a cada interação na epoch
+Regressão linear: acha a melhor expressão y = A1*x1 + A2*x2 + A3*x3 + A4*x4 + .... 
+Logistica : fffffffffffffffffffffffffffffffffffffffffffff
+wlefhleiwflewfherwiufheriufejbfuhe
+fkjbrivgriuhfejhfiueiufhe
+kjfheiufheiujfdiowe3hfiuy
+ewkujebhriufghiuehfefiuheiufejfouehfiejfiuhefoefiuhfe

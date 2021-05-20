@@ -1,7 +1,8 @@
 
 package aplic;
 
-import algoritmo.*;
+import models.LinearRegression;
+import models.Algorithm;
 import java.util.Arrays;
 import preprocess.*;
 
