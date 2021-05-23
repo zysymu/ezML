@@ -7,36 +7,35 @@ public class LogisticRegression extends Algorithm {
     private double learningRate;
     private double epochs;
     private double threshold;
-    private boolean trackError = false;
+    private boolean trackError = true;// tracks error on training set
     private double[] parameters; // theta
     private double[][] X;
     private double[] y;
+    private double[] historicAccuracy;
 
-    public LogisticRegression() {
+    public LogisticRegression(double tr) {
+        this.threshold = tr;
     }
 
     // "constructors"
+    @Override
     public void setLearningRate(double learningRate) {
         this.learningRate = learningRate;
     }
 
+    @Override
     public void setEpochs(int epochs) {
         this.epochs = epochs;
+        historicAccuracy = new double[epochs];
     }
 
-    public void setThreshold(double threshold) {
-        this.threshold = threshold;
-    }
-
-    public void TrackError() {
-        this.trackError = true;// tracks error on training set
-    }
-
+    @Override
     public void setData(double[][] X, double[] y) {
         this.X = X;
         this.y = y;
     }
     
+    @Override
     public void fit() {
         // get dimensions
         int nFeatures = X[0].length;
@@ -59,17 +58,16 @@ public class LogisticRegression extends Algorithm {
 
         // perform update
         for (int e = 0; e < epochs; e++) {
-
-            for (int j = 1; j < parameters.length; j++) {
+            for (int j = 0; j < parameters.length; j++) {
                 double sum = 0;
 
-                switch (j-1) {
-                    case 0: // bias
+                if (j == 0) { // bias
                     for (int m = 0; m < nSamples; m++) {
                         sum += (predict(X[m]) - y[m]);  
                     }
+                }
 
-                    default: // other params
+                else { // other params
                     for (int m = 0; m < nSamples; m++) {
                         sum += (predict(X[m]) - y[m]) * X[m][j-1];
                     }
@@ -79,10 +77,11 @@ public class LogisticRegression extends Algorithm {
             }
 
             if (trackError)
-                System.out.printf("%f,", accuracy(X, y));
+                historicAccuracy[e] = accuracy(X, y);
         }
     }
 
+    @Override
     public double predict(double[] X) {
         double d = 0;
         
@@ -96,6 +95,7 @@ public class LogisticRegression extends Algorithm {
         return prob > threshold ? 1. : 0.;
     }
 
+    @Override
     public double[] getParameters() {
         return parameters;
     }
@@ -112,5 +112,10 @@ public class LogisticRegression extends Algorithm {
 
     private static double sigmoid(double z) {
         return 1 / (1 + Math.exp(-z));
+    }
+
+    @Override
+    public double[] getEfficincyData(){
+        return historicAccuracy;
     }
 }

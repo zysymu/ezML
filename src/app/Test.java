@@ -9,7 +9,8 @@ public class Test {
         CSVReader reader = new CSVReader();
 
         //reader.read("src/app/iris.data", true); // classification 
-        reader.read("src/app/ratos.csv", false); // classification
+        //reader.read("src/app/ratos.csv", false); // classification
+        reader.read("src/app/heart.csv", true); // classification
         //reader.read("src/app/housing.csv", false); // regression
         
         double[][] data;
@@ -46,17 +47,17 @@ public class Test {
         */
 
         // CHOOSE CLASSIFIER AND TRAIN IT
-        //LinearRegression clf = new LinearRegression();
+        //LinearRegression clf = new LinearRegression(true);
         //clf.setLearningRate(0.0001);
         //clf.setEpochs(1000);
         //clf.setStochastic();
-        //clf.TrackError();
         
-        LogisticRegression clf = new LogisticRegression();
-        clf.setLearningRate(0.001);
-        clf.setEpochs(5000);
-        clf.setThreshold(0.5);
-        clf.TrackError();
+        //LogisticRegression clf = new LogisticRegression(0.5);
+        //clf.setLearningRate(0.001);
+        //clf.setEpochs(5000);
+        //clf.TrackError();
+
+        NaiveBayes clf = new NaiveBayes();
 
         clf.setData(trainFeatureData, trainLabelData);
         clf.fit();
@@ -64,11 +65,13 @@ public class Test {
 
         double[] p = clf.getParameters(); // these can be used to make plots
 
+        /*
         System.out.println("parameters: theta_0 (bias), theta_1, theta_2, ...");
         for (int i = 0; i < p.length; i++) {
             System.out.println(p[i]);
         }
         System.out.println("=========================");
+        */
 
         System.out.println("mean");
         p = process.getMean();
@@ -84,7 +87,7 @@ public class Test {
         }
         System.out.println("=========================");
 
-        System.out.println("accuracy");
+        System.out.println("test error/accuracy");
         System.out.println(clf.accuracy(testFeatureData, testLabelData));
 
         // regression test. target = 34.90
@@ -92,7 +95,8 @@ public class Test {
         //double[] aaNormalized = process.normalize(aa);
 
         // classification test. target = 1
-        double[] aa = {320,18};
+        //double[] aa = {320,18};
+        double[] aa = {74,0,1,120,269,0,0,121,1,0.2,2,1,2};
         double[] aaNormalized = process.normalize(aa);
 
         System.out.println("prediction");
