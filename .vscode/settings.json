@@ -1,5 +1,11 @@
 {
     "java.project.sourcePaths": [
         "src"
+    ],
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "referenced_libs/jcommon-1.0.23.jar",
+        "referenced_libs/jfreechart-1.0.19.jar",
+        "referenced_libs/swtgraphics2d.jar"
     ]
 }

@@ -7,36 +7,35 @@ public class LinearRegression extends Algorithm {
     private double learningRate;
     private double epochs;
     private boolean stochastic = false;
-    private boolean trackError = false;
+    private boolean trackError = true; // tracks error on training set
     private double[] parameters; // theta
     private double[][] X;
     private double[] y;
+    private double [] historicError;
 
-    public LinearRegression() {
+    public LinearRegression(boolean stochastic) {
+        this.stochastic = stochastic;
     }
 
     // "constructors"
+    @Override
     public void setLearningRate(double learningRate) {
         this.learningRate = learningRate;
     }
 
+    @Override
     public void setEpochs(int epochs) {
         this.epochs = epochs;
+        historicError = new double[epochs];
     }
 
-    public void setStochastic() {
-        this.stochastic = true;
-    }
-
-    public void TrackError() {
-        this.trackError = true;// tracks error on training set
-    }
-
+    @Override
     public void setData(double[][] X, double[] y) {
         this.X = X;
         this.y = y;
     }
     
+    @Override
     public void fit() {
         // get dimensions
         int nFeatures = X[0].length;
@@ -75,7 +74,7 @@ public class LinearRegression extends Algorithm {
             }
 
             if (trackError)
-                System.out.printf("%f,", error(X, y));
+                historicError[e] = error(X, y);
         }
     }
 
@@ -85,16 +84,16 @@ public class LinearRegression extends Algorithm {
 
         // perform update
         for (int e = 0; e < epochs; e++) {
-            for (int j = 1; j < parameters.length; j++) {
+            for (int j = 0; j < parameters.length; j++) {
                 double sum = 0;
 
-                switch (j-1) {
-                    case 0: // bias
+                if (j == 0) { // bias
                     for (int m = 0; m < nSamples; m++) {
                         sum += (predict(X[m]) - y[m]);  
                     }
+                }
 
-                    default: // other params
+                else { // other params
                     for (int m = 0; m < nSamples; m++) {
                         sum += (predict(X[m]) - y[m]) * X[m][j-1];
                     }
@@ -104,10 +103,11 @@ public class LinearRegression extends Algorithm {
             }
 
             if (trackError)
-                System.out.printf("%f,", error(X, y));
+                historicError[e] = error(X, y);
         }
     }
 
+    @Override
     public double predict(double[] X) {
         double d = 0;
         
@@ -117,6 +117,7 @@ public class LinearRegression extends Algorithm {
         return d + parameters[0];
     }
 
+    @Override
     public double[] getParameters() {
         return parameters; // theta_0 + theta_1 x_1 + theta_2 + x_2 + ...
     }
@@ -131,4 +132,10 @@ public class LinearRegression extends Algorithm {
 
         return sum/X.length;
     }
+    
+    @Override
+    public double[] getEfficincyData(){
+        return historicError;
+    }
+
 }
