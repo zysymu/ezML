@@ -73,7 +73,7 @@ public class LogisticRegression extends Algorithm {
                     }
                 }
 
-                parameters[j] += learningRate * sum;
+                parameters[j] -= learningRate * sum;
             }
 
             if (trackError)

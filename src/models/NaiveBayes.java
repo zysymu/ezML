@@ -130,7 +130,6 @@ public class NaiveBayes extends Algorithm {
             
         }
 
-        System.out.println(idx + "  " + probabilities[0]);
         return (double) idx;
     }
 
