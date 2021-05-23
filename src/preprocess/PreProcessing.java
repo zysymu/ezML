@@ -47,6 +47,7 @@ public class PreProcessing {
         int iActual = 0;
         for (int i=sep; i<dataShuffled.length; i++) {
             testData[iActual] = dataShuffled[i];
+            iActual++;
         }
     }
 
@@ -64,7 +65,7 @@ public class PreProcessing {
 
         // labels of training and testing data
         trainLabelData = extractLabel(trainData, labelCol); 
-        testLabelData =  extractLabel(trainData, labelCol);
+        testLabelData =  extractLabel(testData, labelCol);
     }
 
     public void featuresLabelsSplit() {
