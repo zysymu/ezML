@@ -7,36 +7,22 @@ public class LinearRegression extends Algorithm {
     private double learningRate;
     private double epochs;
     private boolean stochastic = false;
-    private boolean trackError = true; // tracks error on training set
+    private boolean trackMetrics = true; // tracks error on training set
     private double[] parameters; // theta
-    private double[][] X;
-    private double[] y;
-    private double [] historicError;
+    private double [] history;
 
-    public LinearRegression(boolean stochastic) {
-        this.stochastic = stochastic;
-    }
-
-    // "constructors"
-    @Override
-    public void setLearningRate(double learningRate) {
-        this.learningRate = learningRate;
-    }
-
-    @Override
-    public void setEpochs(int epochs) {
+    public LinearRegression(int epochs, double learningRate, boolean stochastic, boolean trackMetrics) {
         this.epochs = epochs;
-        historicError = new double[epochs];
+        this.stochastic = stochastic;
+        this.learningRate = learningRate;
+        this.trackMetrics = trackMetrics;
+
+        if (trackMetrics)
+            history = new double[epochs];
     }
 
     @Override
-    public void setData(double[][] X, double[] y) {
-        this.X = X;
-        this.y = y;
-    }
-    
-    @Override
-    public void fit() {
+    public void fit(double[][] X, double[] y) {
         // get dimensions
         int nFeatures = X[0].length;
         
@@ -73,8 +59,8 @@ public class LinearRegression extends Algorithm {
                 }
             }
 
-            if (trackError)
-                historicError[e] = error(X, y);
+            if (trackMetrics)
+                history[e] = error(X, y);
         }
     }
 
@@ -102,8 +88,8 @@ public class LinearRegression extends Algorithm {
                 parameters[j] -= learningRate * sum;
             }
 
-            if (trackError)
-                historicError[e] = error(X, y);
+            if (trackMetrics)
+                history[e] = error(X, y);
         }
     }
 
@@ -115,11 +101,6 @@ public class LinearRegression extends Algorithm {
             d += X[i-1] * parameters[i];
         }
         return d + parameters[0];
-    }
-
-    @Override
-    public double[] getParameters() {
-        return parameters; // theta_0 + theta_1 x_1 + theta_2 + x_2 + ...
     }
 
     public double error(double[][] X, double[] y) { // mean absolute error
@@ -134,8 +115,12 @@ public class LinearRegression extends Algorithm {
     }
     
     @Override
-    public double[] getEfficincyData(){
-        return historicError;
+    public double[] getParameters() {
+        return parameters; // theta_0 + theta_1 x_1 + theta_2 + x_2 + ...
     }
 
+    @Override
+    public double[] getMetrics() {
+        return history;
+    }
 }

@@ -1,10 +1,7 @@
 package models;
 
-import java.util.Arrays;
 import java.util.LinkedHashSet;
-import java.util.Random;
 import java.util.Set;
-import java.util.TreeSet;
 import java.lang.Math;
 
 public class NaiveBayes extends Algorithm {
@@ -15,29 +12,12 @@ public class NaiveBayes extends Algorithm {
     double[][] meanClasses;
     double[][] varClasses;
     double[] priorClasses;
-    private double[][] X;
-    private double[] y;
 
     public NaiveBayes() {
     }
 
-    // "constructors"
     @Override
-    public void setLearningRate(double learningRate) {
-    }
-
-    @Override
-    public void setEpochs(int epochs) {
-    }
-
-    @Override
-    public void setData(double[][] X, double[] y) {
-        this.X = X;
-        this.y = y;
-    }
-    
-    @Override
-    public void fit() {
+    public void fit(double[][] X, double[] y) {
         // get dimensions
         int nFeatures = X[0].length;
         int nSamples = X.length;
@@ -159,7 +139,7 @@ public class NaiveBayes extends Algorithm {
     }
 
     @Override
-    public double[] getEfficincyData () {
+    public double[] getMetrics () {
         return null;
     }
 }

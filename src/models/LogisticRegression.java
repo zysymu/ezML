@@ -7,36 +7,22 @@ public class LogisticRegression extends Algorithm {
     private double learningRate;
     private double epochs;
     private double threshold;
-    private boolean trackError = true;// tracks error on training set
+    private boolean trackMetrics = true;// tracks accuracy on training set
     private double[] parameters; // theta
-    private double[][] X;
-    private double[] y;
-    private double[] historicAccuracy;
+    private double[] history;
 
-    public LogisticRegression(double tr) {
-        this.threshold = tr;
-    }
-
-    // "constructors"
-    @Override
-    public void setLearningRate(double learningRate) {
-        this.learningRate = learningRate;
-    }
-
-    @Override
-    public void setEpochs(int epochs) {
+    public LogisticRegression(double threshold, int epochs, double learningRate, boolean trackMetrics) {
+        this.threshold = threshold;
         this.epochs = epochs;
-        historicAccuracy = new double[epochs];
-    }
+        this.learningRate = learningRate;
+        this.trackMetrics = trackMetrics;
 
-    @Override
-    public void setData(double[][] X, double[] y) {
-        this.X = X;
-        this.y = y;
+        if (trackMetrics)
+            history = new double[epochs];
     }
     
     @Override
-    public void fit() {
+    public void fit(double[][] X, double[] y) {
         // get dimensions
         int nFeatures = X[0].length;
         
@@ -76,8 +62,8 @@ public class LogisticRegression extends Algorithm {
                 parameters[j] -= learningRate * sum;
             }
 
-            if (trackError)
-                historicAccuracy[e] = accuracy(X, y);
+            if (trackMetrics)
+                history[e] = accuracy(X, y);
         }
     }
 
@@ -115,7 +101,7 @@ public class LogisticRegression extends Algorithm {
     }
 
     @Override
-    public double[] getEfficincyData(){
-        return historicAccuracy;
+    public double[] getMetrics() {
+        return history;
     }
 }

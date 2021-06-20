@@ -7,39 +7,22 @@ public class SVM extends Algorithm {
     private double learningRate;
     private double epochs;
     private double lambda;
-    private boolean trackError = true; // tracks error on training set
+    private boolean trackMetrics = true; // tracks accuracy on training set
     private double[] parameters; // theta
-    private double[][] X;
-    private double[] y;
-    private double [] historicAccuracy;
+    private double [] history;
 
-    public SVM() {
-    }
-
-    // "constructors"
-    @Override
-    public void setLearningRate(double learningRate) {
-        this.learningRate = learningRate;
-    }
-
-    public void setLambda(double lambda) {
+    public SVM(double lambda, int epochs, double learningRate, boolean trackMetrics) {
         this.lambda = lambda; // 0.1 is a good default value, but there are no limits
+        this.learningRate = learningRate;
+        this.trackMetrics = trackMetrics;
+
+        if (trackMetrics)
+            history = new double[epochs];
     }
 
-    @Override
-    public void setEpochs(int epochs) {
-        this.epochs = epochs;
-        historicAccuracy = new double[epochs];
-    }
-
-    @Override
-    public void setData(double[][] X, double[] y) {
-        this.X = X;
-        this.y = y;
-    }
     
     @Override
-    public void fit() {
+    public void fit(double[][] X, double[] y) {
         // get dimensions
         int nFeatures = X[0].length;
         
@@ -101,8 +84,8 @@ public class SVM extends Algorithm {
                 }
             }
 
-            if (trackError)
-                historicAccuracy[e] = accuracy(X, y);
+            if (trackMetrics)
+                history[e] = accuracy(X, y);
         }
     }
 
@@ -143,8 +126,8 @@ public class SVM extends Algorithm {
     }
     
     @Override
-    public double[] getEfficincyData(){
-        return historicAccuracy;
+    public double[] getMetrics() {
+        return history;
     }
 
 }
